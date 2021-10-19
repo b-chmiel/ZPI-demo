@@ -13,6 +13,6 @@
 [submodule "ZPI-authorize-UI"]
 	path = ZPI-authorize-UI
 	url = git@github.com:bachm44/ZPI-authorize-UI.git
-[submodule "ZPI-demo-ui"]
-	path = ZPI-demo-ui
-	url = git@github.com:bachm44/ZPI-demo-ui.git
+[submodule "ZPI-demo-UI"]
+	path = ZPI-demo-UI
+	url = git@github.com:bachm44/ZPI-demo-UI.git
