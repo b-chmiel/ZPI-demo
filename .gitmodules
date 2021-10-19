@@ -1,0 +1,18 @@
+[submodule "ZPI-AMS-UI"]
+	path = ZPI-AMS-UI
+	url = git@github.com:Maciag312/ZPI-AMS-UI.git
+[submodule "ZPI-AMS-service"]
+	path = ZPI-AMS-service
+	url = git@github.com:Maciag312/ZPI-AMS-service.git
+[submodule "ZPI-authorize-service"]
+	path = ZPI-authorize-service
+	url = git@github.com:bachm44/ZPI-authorize-service.git
+[submodule "ZPI-analysis-service"]
+	path = ZPI-analysis-service
+	url = git@github.com:bachm44/ZPI-analysis-service.git
+[submodule "ZPI-authorize-UI"]
+	path = ZPI-authorize-UI
+	url = git@github.com:bachm44/ZPI-authorize-UI.git
+[submodule "ZPI-demo-ui"]
+	path = ZPI-demo-ui
+	url = git@github.com:bachm44/ZPI-demo-ui.git
