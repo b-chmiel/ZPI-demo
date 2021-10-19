@@ -1,0 +1,27 @@
+version: "2.0"
+
+services:
+  zpi-ams-service:
+    build: ./ZPI-AMS-service
+    ports:
+      - "10000:10000"
+  zpi-ams-ui:
+    build: ./ZPI-AMS-UI
+    environment:
+      - PORT=15000
+    ports:
+      - "15000:15000"
+  zpi-analysis-service:
+    build: ./ZPI-analysis-service
+    ports:
+      - "5000:5000"
+  zpi-authorize-service:
+    build: ./ZPI-authorize-service
+    ports:
+      - "8080:8080"
+  zpi-demo-ui:
+    build: ./ZPI-demo-UI
+    environment:
+      - PORT=3000
+    ports:
+      - "3000:3000"
