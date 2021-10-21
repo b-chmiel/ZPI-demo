@@ -5,12 +5,6 @@ services:
     build: ./ZPI-AMS-service
     ports:
       - "10000:10000"
-  zpi-ams-ui:
-    build: ./ZPI-AMS-UI
-    environment:
-      - PORT=15000
-    ports:
-      - "15000:15000"
   zpi-analysis-service:
     build: ./ZPI-analysis-service
     ports:
@@ -19,6 +13,10 @@ services:
     build: ./ZPI-authorize-service
     ports:
       - "8080:8080"
+    links:
+      - "zpi-ams-service:ams"
+    environment:
+        - AMS_URL=http://ams:10000
   zpi-demo-ui:
     build: ./ZPI-demo-UI
     environment:
