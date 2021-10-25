@@ -15,8 +15,10 @@ services:
       - "8080:8080"
     links:
       - "zpi-ams-service:ams"
+      - "zpi-analysis-service:analysis"
     environment:
         - AMS_URL=http://ams:10000
+        - ANALYSIS_URL=http://analysis:5000
   zpi-demo-ui:
     build: ./ZPI-demo-UI
     environment:
