@@ -1,32 +1,6 @@
 version: "3.1"
 
 services:
-  zpi-ams-service:
-    build: ./ZPI-AMS-service
-    ports:
-      - "10000:10000"
-  zpi-analysis-service:
-    build: ./ZPI-analysis-service
-    ports:
-      - "5000:5000"
-  zpi-authorize-service:
-    build: ./ZPI-authorize-service
-    ports:
-      - "8080:8080"
-    links:
-      - "zpi-ams-service:ams"
-      - "zpi-analysis-service:analysis"
-      - "mailserver:mail"
-    environment:
-        - AMS_URL=http://ams:10000
-        - ANALYSIS_URL=http://analysis:5000
-        - EMAIL_SERVER_HOST=mail
-  zpi-demo-ui:
-    build: ./ZPI-demo-UI
-    environment:
-      - PORT=3000
-    ports:
-      - "3000:3000"
   mailserver:
     image: docker.io/mailserver/docker-mailserver:latest
     container_name: mailserver
@@ -34,7 +8,7 @@ services:
     # you can assign this entirely to `hostname` and remove `domainname`.
     hostname: mail
     domainname: zpi.com
-    env_file: docker-mailserver/mailserver.env
+    env_file: mailserver.env
     # More information about the mail-server ports:
     # https://docker-mailserver.github.io/docker-mailserver/edge/config/security/understanding-the-ports/
     # To avoid conflicts with yaml base-60 float, DO NOT remove the quotation marks.
@@ -45,15 +19,14 @@ services:
       - "587:587"  # ESMTP (explicit TLS => STARTTLS)
       - "993:993"  # IMAP4 (implicit TLS)
     volumes:
-      - ./docker-mailserver/docker-data/dms/mail-data/:/var/mail/
-      - ./docker-mailserver/docker-data/dms/mail-state/:/var/mail-state/
-      - ./docker-mailserver/docker-data/dms/mail-logs/:/var/log/mail/
-      - ./docker-mailserver/docker-data/dms/config/:/tmp/docker-mailserver/
+      - ./docker-data/dms/mail-data/:/var/mail/
+      - ./docker-data/dms/mail-state/:/var/mail-state/
+      - ./docker-data/dms/mail-logs/:/var/log/mail/
+      - ./docker-data/dms/config/:/tmp/docker-mailserver/
       - /etc/localtime:/etc/localtime:ro
     restart: always
     stop_grace_period: 1m
     cap_add:
       - NET_ADMIN
       - SYS_PTRACE
-
 
