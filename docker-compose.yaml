@@ -5,10 +5,32 @@ services:
     build: ./ZPI-AMS-service
     ports:
       - "10000:10000"
+    environment:
+      - SPRING_MAIL_HOST=mail
+      - SPRING_MAIL_USERNAME=admin@zpi.com
+      - SPRING_MAIL_PASSWORD=admin
+      - SPRING_MAIL_PROPERTIES=
+    links:
+      - "mailserver:mail"
+  db:
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=test_db
   zpi-analysis-service:
     build: ./ZPI-analysis-service
     ports:
       - "5000:5000"
+    command: bash -c "make migrate-deploy && make serve"
+    volumes:
+      - ./ZPI-analysis-service:/code
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432
   zpi-authorize-service:
     build: ./ZPI-authorize-service
     ports:
@@ -50,10 +72,7 @@ services:
       - ./docker-mailserver/docker-data/dms/mail-logs/:/var/log/mail/
       - ./docker-mailserver/docker-data/dms/config/:/tmp/docker-mailserver/
       - /etc/localtime:/etc/localtime:ro
-    restart: always
     stop_grace_period: 1m
     cap_add:
       - NET_ADMIN
       - SYS_PTRACE
-
-
