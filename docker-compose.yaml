@@ -9,28 +9,28 @@ services:
       - SPRING_MAIL_HOST=mail
       - SPRING_MAIL_USERNAME=admin@zpi.com
       - SPRING_MAIL_PASSWORD=admin
-      - SPRING_MAIL_PROPERTIES=
+      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH=true
+      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE=false
     links:
       - "mailserver:mail"
   db:
-    image: postgres:11
+    image: postgres:latest
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=test_db
+      - POSTGRES_DB=analysis_db
   zpi-analysis-service:
     build: ./ZPI-analysis-service
     ports:
       - "5000:5000"
-    command: bash -c "make migrate-deploy && make serve"
-    volumes:
-      - ./ZPI-analysis-service:/code
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/analysis_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
   zpi-authorize-service:
     build: ./ZPI-authorize-service
     ports:
@@ -40,9 +40,13 @@ services:
       - "zpi-analysis-service:analysis"
       - "mailserver:mail"
     environment:
-        - AMS_URL=http://ams:10000
-        - ANALYSIS_URL=http://analysis:5000
-        - EMAIL_SERVER_HOST=mail
+      - SPRING_MAIL_HOST=mail
+      - SPRING_MAIL_USERNAME=admin@zpi.com
+      - SPRING_MAIL_PASSWORD=admin
+      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH=true
+      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE=false
+      - AMS_URL=http://ams:10000
+      - ANALYSIS_URL=http://analysis:5000
   zpi-demo-ui:
     build: ./ZPI-demo-UI
     environment:
@@ -76,3 +80,12 @@ services:
     cap_add:
       - NET_ADMIN
       - SYS_PTRACE
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@zpi.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
