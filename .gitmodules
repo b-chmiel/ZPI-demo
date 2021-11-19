@@ -18,3 +18,6 @@
 	path = ZPI-demo-UI
 	url = git@github.com:bachm44/ZPI-demo-UI.git
 	branch = main
+[submodule "ZPI-analysis-service"]
+	path = ZPI-analysis-service
+	url = git@github.com:bachm44/ZPI-analysis-service.git
