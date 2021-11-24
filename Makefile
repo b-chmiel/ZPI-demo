@@ -1,7 +1,4 @@
-run: pull build-services 
-	docker-compose up --build
-
-fast: 
+run: 
 	docker-compose up --build
 
 pull:
