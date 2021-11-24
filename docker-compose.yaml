@@ -71,10 +71,10 @@ services:
       - "587:587"  # ESMTP (explicit TLS => STARTTLS)
       - "993:993"  # IMAP4 (implicit TLS)
     volumes:
-      - ./docker-mailserver/docker-data/dms/mail-data/:/var/mail/
-      - ./docker-mailserver/docker-data/dms/mail-state/:/var/mail-state/
-      - ./docker-mailserver/docker-data/dms/mail-logs/:/var/log/mail/
-      - ./docker-mailserver/docker-data/dms/config/:/tmp/docker-mailserver/
+      - mail-data:/var/mail/
+      - mail-state:/var/mail-state/
+      - mail-logs:/var/log/mail/
+      - ./docker-mailserver/config/:/tmp/docker-mailserver/
       - /etc/localtime:/etc/localtime:ro
     stop_grace_period: 1m
     cap_add:
@@ -83,9 +83,14 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     ports:
-      - "80:80"
+      - "8888:80"
     depends_on:
       - db
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@zpi.com
       - PGADMIN_DEFAULT_PASSWORD=admin
+
+volumes:
+  mail-data:
+  mail-state:
+  mail-logs:
