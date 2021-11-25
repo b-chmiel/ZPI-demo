@@ -47,12 +47,13 @@ services:
     build: ./ZPI-demo-UI
     environment:
       - PORT=3000
-      - REACT_APP_AUTH_HOST=auth.zpi.com
+      - REACT_APP_AUTH_HOST=https://auth.zpi.com
       - REACT_APP_AUTH_CLIENT_ID=2
   nginx:
     build: ./proxy
     ports:
       - "80:80"
+      - "443:443"
     links:
       - "zpi-demo-ui:demo"
       - "zpi-ams-service:ams"
