@@ -15,16 +15,14 @@ services:
       - "mailserver:mail"
   db:
     image: postgres:latest
-    ports:
-      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=analysis_db
   zpi-analysis-service:
     build: ./ZPI-analysis-service
-    ports:
-      - "5000:5000"
     depends_on:
       - db
     environment:
@@ -33,8 +31,6 @@ services:
       - SPRING_DATASOURCE_PASSWORD=postgres
   zpi-authorize-service:
     build: ./ZPI-authorize-service
-    ports:
-      - "8080:8080"
     links:
       - "zpi-ams-service:ams"
       - "zpi-analysis-service:analysis"
@@ -51,8 +47,18 @@ services:
     build: ./ZPI-demo-UI
     environment:
       - PORT=3000
+      - REACT_APP_AUTH_HOST=https://auth.zpi.com
+      - REACT_APP_AUTH_CLIENT_ID=2
+  nginx:
+    build: ./proxy
     ports:
-      - "3000:3000"
+      - "80:80"
+      - "443:443"
+    links:
+      - "zpi-demo-ui:demo"
+      - "zpi-ams-service:ams"
+      - "zpi-authorize-service:auth"
+      - "pgadmin:pgadmin"
   mailserver:
     image: docker.io/mailserver/docker-mailserver:latest
     container_name: mailserver
@@ -65,11 +71,11 @@ services:
     # https://docker-mailserver.github.io/docker-mailserver/edge/config/security/understanding-the-ports/
     # To avoid conflicts with yaml base-60 float, DO NOT remove the quotation marks.
     ports:
-      - "35:25"    # SMTP  (explicit TLS => STARTTLS)
-      - "143:143"  # IMAP4 (explicit TLS => STARTTLS)
-      - "465:465"  # ESMTP (implicit TLS)
-      - "587:587"  # ESMTP (explicit TLS => STARTTLS)
-      - "993:993"  # IMAP4 (implicit TLS)
+      - "35:25" # SMTP  (explicit TLS => STARTTLS)
+      - "143:143" # IMAP4 (explicit TLS => STARTTLS)
+      - "465:465" # ESMTP (implicit TLS)
+      - "587:587" # ESMTP (explicit TLS => STARTTLS)
+      - "993:993" # IMAP4 (implicit TLS)
     volumes:
       - mail-data:/var/mail/
       - mail-state:/var/mail-state/
@@ -82,15 +88,15 @@ services:
       - SYS_PTRACE
   pgadmin:
     image: dpage/pgadmin4
-    ports:
-      - "8888:80"
     depends_on:
       - db
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@zpi.com
       - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=8888
 
 volumes:
   mail-data:
   mail-state:
   mail-logs:
+  db-data:
