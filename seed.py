@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import requests
 
 ams_url = "https://ams.zpi.com"
