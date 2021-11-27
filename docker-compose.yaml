@@ -59,6 +59,7 @@ services:
       - "zpi-ams-service:ams"
       - "zpi-authorize-service:auth"
       - "pgadmin:pgadmin"
+      - "grafana:grafana"
   mailserver:
     image: docker.io/mailserver/docker-mailserver:latest
     container_name: mailserver
@@ -94,6 +95,10 @@ services:
       - PGADMIN_DEFAULT_EMAIL=admin@zpi.com
       - PGADMIN_DEFAULT_PASSWORD=admin
       - PGADMIN_LISTEN_PORT=8888
+  grafana:
+    build: './grafana'
+    depends_on:
+      - db
 
 volumes:
   mail-data:
