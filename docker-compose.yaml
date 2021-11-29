@@ -14,7 +14,7 @@ services:
     links:
       - "mailserver:mail"
   db:
-    image: postgres:latest
+    image: postgres:14.1
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
@@ -47,7 +47,7 @@ services:
     build: ./ZPI-demo-UI
     environment:
       - PORT=3000
-      - REACT_APP_AUTH_HOST=https://auth.zpi.com
+      - REACT_APP_AUTH_HOST=https://auth.zpi.fuf.me
       - REACT_APP_AUTH_CLIENT_ID=2
   nginx:
     build: ./proxy
@@ -61,7 +61,7 @@ services:
       - "pgadmin:pgadmin"
       - "grafana:grafana"
   mailserver:
-    image: docker.io/mailserver/docker-mailserver:latest
+    image: docker.io/mailserver/docker-mailserver:10.3.0
     container_name: mailserver
     # If the FQDN for your mail-server is only two labels (eg: example.com),
     # you can assign this entirely to `hostname` and remove `domainname`.
@@ -96,7 +96,7 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=admin
       - PGADMIN_LISTEN_PORT=8888
   grafana:
-    build: './grafana'
+    build: "./grafana"
     depends_on:
       - db
 

@@ -1,0 +1,12 @@
+authorityKeyIdentifier = keyid,issuer
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = demo.zpi.fuf.me
+DNS.2 = ams.zpi.fuf.me
+DNS.3 = auth.zpi.fuf.me
+DNS.4 = pgadmin.zpi.fuf.me
+DNS.5 = grafana.zpi.fuf.me
+IP.1 = 127.0.0.1
