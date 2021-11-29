@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 import requests
 
-ams_url = "https://ams.zpi.com"
+ams_url = "https://ams.zpi.fuf.me"
+redirect_url = "https://demo.zpi.fuf.me/"
 headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json'
 }
-crt = 'proxy/zpi.com.crt'
+crt = 'proxy/certs/out/localhost.crt'
 
 r = requests.post(
     ams_url + "/api/manager/signin", headers=headers, json={'username': 'admin', 'password': 'admin'}, verify=crt)
@@ -21,7 +22,7 @@ auth_headers = {
 }
 
 r = requests.post(ams_url + "/api/clients", headers=auth_headers,
-                  json={'id': '2', 'availableRedirectUris': ['https://demo.zpi.com/']}, verify=crt)
+                  json={'id': '2', 'availableRedirectUris': [redirect_url]}, verify=crt)
 
 print(r, r.text)
 

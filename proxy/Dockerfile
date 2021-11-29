@@ -1,4 +1,4 @@
-FROM nginx:latest
+FROM nginx:1.20-alpine
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY zpi.com.crt /etc/ssl/
-COPY zpi.com.key /etc/ssl/
+COPY certs/out/ /etc/ssl/
+COPY certs/out/ /etc/ssl/

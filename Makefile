@@ -10,4 +10,6 @@ e2e: pull build-services
 	docker-compose down
 
 cert:
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout proxy/zpi.com.key -out proxy/zpi.com.crt
+	make -C proxy/certs
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout proxy/zpi.com.key -out proxy/zpi.com.crt
+
