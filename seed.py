@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 import requests
 
-ams_url = "https://ams.zpi.fuf.me"
-redirect_url = "https://demo.zpi.fuf.me/"
+ams_url = "https://ams.zpi.localtest.me"
+redirect_url = "https://demo.zpi.localtest.me/"
 headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json'

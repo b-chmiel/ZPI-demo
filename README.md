@@ -19,7 +19,7 @@ or
 
 `make`
 
-In order to add user, use https://ams.zpi.fuf.me.
+In order to add user, use https://ams.zpi.localtest.me.
 
 Password for newly created account is sent to email address
 provided during registration.
@@ -39,18 +39,24 @@ Source code: https://github.com/bachm44/ZPI-authorize-lib
 
 ### Load balancer & Reverse Proxy
 
-Services are hosted using Nginx with the use of `fuf.me` domain conveniently
+Services are hosted using Nginx with the use of `localtest.me` domain conveniently
 pointing to 127.0.0.1. For more information see `proxy/nginx.conf`.
+Before usage please validate if domain still points there using
+[this service](https://dnschecker.org/#A/localtest.me).
 
-The system uses `https` protocol with self signed SSL certificates. The
+The system uses `https` protocol with self-signed SSL certificates. The
 project provides sample certificates inside `proxy/certs/out`.
 Those certificates should be imported in the browser of
 your choice. In order to generate new certificates use
-`make cert` command.
+`make cert` command and applying everywhere default values (by clicking
+Enter) and setting required passphase.
+
+Instead of importing certificates to your browser, you can skip validation
+by clicking proceed with caution (or equivalent).
 
 Configuration available inside `proxy` directory.
 
-### Demo application (https://demo.zpi.fuf.me)
+### Demo application (https://demo.zpi.localtest.me)
 
 The demo application (Client) consists of authorize button used for obtaining
 access token by the user.
@@ -59,7 +65,7 @@ Source code:
 
 - frontend - https://github.com/bachm44/ZPI-demo-UI
 
-### Access management system (https://ams.zpi.fuf.me)
+### Access management system (https://ams.zpi.localtest.me)
 
 The access management system (AMS) is responsible for access, role and user
 management through admin console.
@@ -74,7 +80,7 @@ Source code:
 - backend - https://github.com/Maciag312/ZPI-AMS-service
 - frontend - https://github.com/Maciag312/ZPI-AMS-UI
 
-### Authentication and authorization server (https://auth.zpi.fuf.me)
+### Authentication and authorization server (https://auth.zpi.localtest.me)
 
 The authentication and authorization server responsible for authentication
 of user
@@ -86,7 +92,7 @@ Source code:
 - backend - https://github.com/bachm44/ZPI-authorize-service
 - frontend - https://github.com/bachm44/ZPI-authorize-UI
 
-### pgAdmin (https://pgadmin.zpi.fuf.me)
+### pgAdmin (https://pgadmin.zpi.localtest.me)
 
 Use to access raw analysis data.
 
@@ -95,7 +101,7 @@ Credentials:
 - username: admin@zpi.com
 - password: admin
 
-### Grafana (https://grafana.zpi.fuf.me)
+### Grafana (https://grafana.zpi.localtest.me)
 
 Visualisation of analysis data.
 

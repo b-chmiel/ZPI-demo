@@ -4,9 +4,9 @@ keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 
 [alt_names]
-DNS.1 = demo.zpi.fuf.me
-DNS.2 = ams.zpi.fuf.me
-DNS.3 = auth.zpi.fuf.me
-DNS.4 = pgadmin.zpi.fuf.me
-DNS.5 = grafana.zpi.fuf.me
+DNS.1 = demo.zpi.localtest.me
+DNS.2 = ams.zpi.localtest.me
+DNS.3 = auth.zpi.localtest.me
+DNS.4 = pgadmin.zpi.localtest.me
+DNS.5 = grafana.zpi.localtest.me
 IP.1 = 127.0.0.1
